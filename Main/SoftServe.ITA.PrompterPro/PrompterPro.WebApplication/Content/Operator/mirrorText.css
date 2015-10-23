@@ -1,0 +1,28 @@
+﻿
+.textarea-style{
+    background-color:#000;
+    color:#ffffff;
+    overflow:hidden;
+    resize:none;
+    font-size: 100px;
+    height: 400px;
+    width: 740px;
+    min-width: 740px;
+    border-style: none;
+}
+.textarea-prompter
+{
+    background-color:#000;
+    color:#ffffff;
+    height: 400px;
+    width: 740px;
+    min-width: 740px;
+    overflow: hidden;
+    resize: none;
+    border-style: none;
+    font-size: 100px;
+}
+.move-left{
+    margin-left:10px;
+}
+s

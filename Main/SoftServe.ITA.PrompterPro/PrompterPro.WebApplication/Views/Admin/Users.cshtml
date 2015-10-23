@@ -1,0 +1,229 @@
+﻿@model dynamic
+
+<div class="panel panel-default" align="right" ng-init="fetchUsers()">
+<table class="table table-striped" role="grid">
+    <tr class="label-primary tableHeader-style">
+        <th>User id</th>
+        <th ng-click="predicate = 'Login'; reverse=!reverse">Login</th>
+        <th ng-click="predicate1 = 'PrompterStatus'; reverse=!reverse">Prompter Status</th>
+        <th ng-click="predicate2 = 'Role.Name'; reverse=!reverse">Role</th>
+        @*<th ng-click="predicate3 = 'Disabled'; reverse=!reverse">Disabled</th>*@
+        <th align="right">
+            <div class="btn-group-sm pull-right">
+                <button class="btn btn-default "ng-click="saveAllChanges()">
+                    <span class="glyphicon glyphicon-floppy-disk"> </span>  
+                    Save
+                </button>
+                <button class="btn btn-primary "ng-click="openAddDialog(lg)">
+                    <span class="glyphicon glyphicon-plus-sign"> </span>  
+                    Add
+                </button>
+            </div>
+        </th>
+    </tr>
+    <tr class=" table-striped tableData-style " ng-repeat="user in users  | orderBy:predicate:reverse
+                                                                              | orderBy:predicate1:reverse
+                                                                              | orderBy:predicate2:reverse
+                                                                              | orderBy:predicate3:reverse "
+        ng-class="controlUserColor(user)">
+
+        <td>{{user.UserId}}</td>
+        <td>{{user.Login }}</td>
+        <td> {{user.PrompterStatus}}</td>
+        <td>{{user.Role.Name}}</td>
+        <td align="right">
+            <span class="btn-group-sm">
+                    <button class="btn btn-default glyphicon glyphicon-pencil"
+                            ng-click="openEditDialog(sm,user)"
+                            ng-show="showEditDelete"></button>
+                    <button class="btn btn-default glyphicon glyphicon-trash"
+                            ng-click="isDeleted = true;
+                                      showEditDelete = false;
+                                      showOkRemove = true"
+                            ng-show="showEditDelete"></button>
+
+                    <button class="btn btn-success glyphicon glyphicon-ok-circle"
+                            ng-click="showOkRemove = false;
+                                      showEditDelete=true;
+                                      deleteCurrentUser(user)"
+                            ng-show="showOkRemove"></button>
+                    <button class="btn btn-danger glyphicon glyphicon-remove-circle"
+                            ng-click="showEditDelete = true;
+                                      showOkRemove = false"
+                            ng-show="showOkRemove"></button>
+                </span>
+        </td>
+    </tr>
+</table>
+    <div class="loader" ng-show="!users"></div>
+    @*Modal Box for editing users*@
+<script type="text/ng-template" id="editUserModal.html">
+
+    <div ng-controller="usersController" >
+        <div class="modal-header label-primary tableHeader-style" align="center">
+            Edit user
+        </div>
+    </div>
+    <div class="modal-body" ng-form="editForm" ng-init="showPrompterStatus=
+         (userForEditing.Role.Name === 'Prompter')?true:false">
+        <div class="form-group">
+            <label>Disabled:</label>
+            <div class="input-group">
+                <input type="text" class="form-control"
+                       ng-model="userForEditing.Disabled" readonly>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle"
+                            data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><a ng-click="userForEditing.Disabled = false">False</a></li>
+                        <li><a ng-click="userForEditing.Disabled = true">True</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Login:</label>
+            <input name="login" type="text" class="form-control"
+                   ng-model="userForEditing.Login" required ng-minlength="3" />
+            <span class="field-validation-error" ng-show="editForm.login.$error.required">Required!</span>
+            <span class="field-validation-error" ng-show="editForm.login.$error.minlength">To Short!</span>
+        </div>
+        <div class="form-group">
+            <label>Role:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="userForEditing.Role.Name"
+                       readonly>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle"
+                            data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li>
+                            <a ng-click="userForEditing.Role.Name = 'Admin'; showPrompterStatus=false">
+                                Admin
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="userForEditing.Role.Name = 'Operator';
+                               showPrompterStatus=false">
+                                Operator
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="userForEditing.Role.Name = 'Prompter';
+                               showPrompterStatus=true">
+                                Prompter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-show="showPrompterStatus">
+                <div class="form-group">
+                    <label>Prompter Status:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               ng-model="userForEditing.PrompterStatus" readonly>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a ng-click="userForEditing.PrompterStatus = 'Off';">Off</a></li>
+                                <li><a ng-click="userForEditing.PrompterStatus = 'On'">On</a></li>
+                                <li><a ng-click="userForEditing.PrompterStatus = 'Busy'">Busy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="cancel();
+                                                      setIsEdited(false);
+                                                      setShowOddAndEven(true)">
+                Cancel
+            </button>
+            <button class="btn btn-primary" ng-click="ok(); setShowOddAndEven(false);
+                                                      setIsEdited(true)"
+                    ng-disabled="editForm.$invalid">
+                Save
+            </button>
+
+        </div>
+    </div>
+
+    
+</script>
+
+    @*Modal Box for adding new users*@
+<script type="text/ng-template" id="addUserModal.html">
+        <div class=" modal-header label-primary tableheader-style" align="center">
+            Add new user
+        </div>
+        <div class="modal-body" ng-form="addForm">
+            <div class=" form-group">
+                <label>Login:</label>
+                <input name="login" type="text" class="form-control"
+                       ng-model="newUser.Login" required ng-minlength="3" />
+                <span class="field-validation-error" ng-show="addForm.login.$error.required">Required!</span>
+                <span class="field-validation-error" ng-show="addForm.login.$error.minlength">To Short!</span>
+
+
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input name="password" type="text" class="form-control"
+                       ng-model="newUser.Password" required ng-minlength="3" />
+                <span class="field-validation-error" ng-show="addForm.password.$error.required">Required!</span>
+                <span class="field-validation-error" ng-show="addForm.password.$error.minlength">To Short!</span>
+
+            </div>
+            <div class="form-group">
+                <label>Role:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="newUser.Role.Name" readonly>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown" aria-expanded="false">
+                            Avaible roles
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li>
+                                <a ng-click="newUser.Role.Name = 'Admin'">
+                                    Admin
+                                </a>
+                            </li>
+                            <li>
+                                <a ng-click="newUser.Role.Name = 'Operator'">
+                                    Operator
+                                </a>
+                            </li>
+                            <li>
+                                <a ng-click="newUser.Role.Name = 'Prompter'">
+                                    Prompter
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-primary" ng-click="ok()" ng-disabled="addForm.$invalid">
+                    Save
+                </button>
+
+            </div>
+        </div>
+</script>
+
+
+
+</div>

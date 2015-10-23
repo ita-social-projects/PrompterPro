@@ -1,0 +1,41 @@
+﻿.elementLeftPadding {
+    padding-left: 2px;
+}
+
+.elementRightPadding {
+    padding-right: 2px;
+}
+
+.userActivityLogRow {
+    height: 47px;
+    display:table-cell;
+    vertical-align:middle;
+    text-align:left;
+}
+
+.userActivityMainRow {
+    border: lightgrey 1px solid;
+    border-radius: 5px;
+}
+
+.userActivityHeaderRow {
+    background: #337AB7;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.userActivitySplitterRow {
+    border: 1px solid;
+    border-color: #337ab7;
+}
+
+div.cell.even {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: lightgrey;
+}
+
+div.noLeftPadding {
+    padding-left: 0;
+}

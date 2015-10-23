@@ -1,0 +1,36 @@
+﻿@using System.Web.Optimization
+@using DocumentFormat.OpenXml.Drawing.ChartDrawing
+
+@{
+    Layout = "../_Layout.cshtml";
+}
+
+
+<div>
+    <div ng-controller="adminController">
+        <ul class="nav nav-pills">
+            <li role="presentation" ng-click='makeUserTab()' ng-class="{'active':isUsersTabActive}">
+                <a id="userHref" href="#!/Admin/Users">Users</a>
+                <div ng-init="autoClick('userHref'); isUsersTabActive = true"></div>
+            </li>
+            <li role="presentation" ng-click='makeDiagnosticsTab()'
+                ng-class="{'active':isDiagnosticsTabActive}">
+                <a href="#!/Admin/Diagnostics">Diagnostics</a>
+            </li>
+            <li role="presentation" ng-click="makeHistoryTab()"
+                ng-class="{'active':isHistoryTabActive}">
+                <a href="#!/Admin/UserActivity">Users Activity</a>
+            </li>
+        </ul>
+    </div>
+    <div ng-view></div>
+</div>
+
+
+
+
+    
+
+
+
+

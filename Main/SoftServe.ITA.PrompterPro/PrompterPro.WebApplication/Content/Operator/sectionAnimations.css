@@ -1,0 +1,19 @@
+﻿.animate-show {
+      opacity: 1;
+      padding: 10px;
+      border: 1px solid gray;
+      background: white;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+    max-height: 0;
+    border: 0;
+    transition: 0.3s;
+    transition-property: all;
+}
+
+.animate-show.ng-hide {
+      line-height: 0;
+      padding: 0 5px;
+}

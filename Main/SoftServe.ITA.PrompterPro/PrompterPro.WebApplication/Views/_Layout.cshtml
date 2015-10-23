@@ -1,0 +1,54 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+
+<html style="resize:none">
+<head>
+	<title>@ViewBag.Title</title>
+	<script src="~/Scripts/min/scripts.min.js"></script>
+	<script src="signalr/hubs"></script>
+	<script src="~/Scripts/min/app.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="~/Content/styles.min.css">
+
+    @RenderSection("Scripts", false)
+
+</head>
+<body>
+    <div ng-app="app" ng-controller="loginController">
+        <div class="navbar navbar-inverseNew navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"
+                            data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+                <div class="navbar-collapse collapse">
+                    <h3 class="layout-font">Prompter Pro</h3>
+                    <ul class="navbar-right pull-right">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <strong>You are logged in as @Html.Encode(User.Identity.Name).</strong>
+                            <a class="glyphicon glyphicon-log-out" title="LogOut" href="/Login/Logout" ng-click="refresh()"></a>
+                        }
+                        else
+                        {
+                            <strong>You are not logged in.</strong>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container body-content">
+
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>
+

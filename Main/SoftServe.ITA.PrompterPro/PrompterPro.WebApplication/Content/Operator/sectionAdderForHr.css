@@ -1,0 +1,12 @@
+﻿hr.sectionAdder {
+    cursor: pointer;
+    background: #09C;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+}
+
+hr.sectionAdder:hover {
+    border: 8px solid #ccc;
+    border-radius: 4px;
+    transition: 0.1s;
+}

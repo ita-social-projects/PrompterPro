@@ -1,0 +1,196 @@
+﻿@model dynamic
+
+<!-- comand panel -->
+<div class="row">
+    <div class="container-fluid noLeftPadding">
+        <div class="col-md-2 col-lg-2 col-sm-2 col-md-offset-5 col-lg-offset-5 col-sm-offset-5 text-center">
+            <div class="row btn-group">
+                <button class="btn btn-primary" ng-click="getPreviousPage()"
+                        ng-disabled="isLoadingInProcess || disablePreviousPageButton()">
+                    <span class="glyphicon glyphicon-chevron-left"> </span>
+                </button>
+                <button class="btn btn-primary disabled"
+                        disabled="disabled">
+                <!-- refresh log page-->
+                    <span class="glyphicon glyphicon glyphicon glyphicon-file"> </span>
+                    : {{logPage}}
+                </button>
+                <button class="btn btn-primary" ng-click="getNextPage()"
+                        ng-disabled="isLoadingInProcess || disableNextPageButton()">
+                    <span class="glyphicon glyphicon-chevron-right"> </span>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-md-offset-1 col-lg-offset-1 col-sm-offset-1 text-right">
+            <div class="row btn-group">
+                <button class="btn btn-primary" ng-click="refreshCurrentPage()"
+                        ng-disabled="isLoadingInProcess">
+                    <span class=" glyphicon glyphicon-refresh">
+                    </span>
+                </button>
+                <button class="btn btn-primary" ng-click="openConfirmationWindow()"
+                        ng-disabled="isLoadingInProcess || isAnyLogAvaible()">
+                    <span class=" glyphicon glyphicon-trash">
+                    </span>
+                </button>
+                <button class="btn btn-primary disabled">
+                    <span class="glyphicon glyphicon-pencil"> </span>
+                    Activity track:
+                </button>
+                <button class="btn btn-primary" ng-click="changeTrackingState()"
+                        ng-disabled="isActivityStateChanging">
+                    {{formatUserActivityStatus(activityStatus)}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- log list header -->
+<div class="row-fluid userActivityMainRow">
+    <div class="container-fluid ">
+        <div class="row userActivityHeaderRow">
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <div class="row elementLeftPadding">
+                    <h4><b>User role</b></h4>
+                </div>
+                <div class="row elementLeftPadding">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"
+                               aria-hidden="true"></i>
+                        </span>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="User role..."
+                               ng-model="searchText.UserRoleName">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <div class="row elementLeftPadding">
+                    <h4><b>User name</b></h4>
+                </div>
+                <div class="row elementLeftPadding">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"
+                               aria-hidden="true"></i>
+                        </span>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="User name..."
+                               ng-model="searchText.UserName">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-3">
+                <div class="row elementLeftPadding">
+                    <h4><b>Date</b></h4>
+                </div>
+                <div class="row elementLeftPadding">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"
+                               aria-hidden="true"></i>
+                        </span>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Date..."
+                               ng-model="searchText.Date">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-lg-5 col-sm-5">
+                <div class="row elementLeftPadding">
+                    <h4><b>Description</b></h4>
+                </div>
+                <div class="row elementLeftPadding elementRightPadding">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"
+                               aria-hidden="true"></i>
+                        </span>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Description..."
+                               ng-model="searchText.Description">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row userActivitySplitterRow"></div>
+
+        <!-- logs list-->
+        <div ng-show="!isLoadingInProcess">
+            <div class="row-fluid">
+                <div ng-repeat="log in currentPageLogs | filter:searchText">
+                    <div class="row cell"
+                         ng-class-odd="'odd'"
+                         ng-class-even="'even'">
+                        <div class="col-md-2 col-lg-2 col-sm-2 text-left">
+                            <div class="row elementLeftPadding userActivityLogRow">
+                                {{log.UserRoleName}}
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-sm-2">
+                            <div class="row elementLeftPadding userActivityLogRow">
+                                {{log.UserName}}
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-3">
+                            <div class="row elementLeftPadding userActivityLogRow">
+                                {{log.Date}}
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-5 col-sm-5">
+                            <div class="row elementLeftPadding userActivityLogRow">
+                                {{log.Description}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- loader -->
+<div class="loader"
+     ng-show="isLoadingInProcess"></div>
+<!-- Modal window for deleting confirmation -->
+<div id="confirmationModal"
+     class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Clear all history</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you shure you want to clear all history?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal"
+                        ng-click="closeConfirmationWindow()">
+                    No
+                </button>
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="clearAllUserActivityHistory()">
+                    Yes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

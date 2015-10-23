@@ -1,0 +1,141 @@
+﻿.navbar-inverseNew {
+  background-color: #0099CC;
+  border-color: #0099CC;
+  color: white;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+}
+.warnning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+}
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+}
+
+.odd {
+    background-color: #F2F2F2;
+}
+.even {
+    background-color: #fff;
+}
+
+.default-font {
+    font-family: sans-serif;
+}
+
+.popup-style {
+    background-color: #A3C2C2;
+}
+
+.default-color {
+    background: #0099CC;
+}
+
+.panel-background {
+    background: blue;
+}
+.layout-font {
+    font-family: timeburner;
+}
+.tableHeader-style {
+    font-family: sans-serif;
+    font-size: 16px;
+    color: white;
+}
+.tableData-style {
+    font-family: sans-serif;
+    font-size: 14px
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+
+select.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+input.ng-dirty.ng-invalid {
+            border: 1px solid red;
+            background-color: rgb(255, 244, 244);
+        }
+
+.side-bar {
+    position: fixed;
+    top:100px;
+    width:250px;
+}
+
+.head-bar {
+    position: fixed;
+    top:85px;
+    height:115px;
+    z-index: 100;
+    background-color: white;
+}
+
+.margin-vert {
+    margin-top: 15px;
+}
+
+.script-area {
+    margin-left: 300px;
+}
+
+.sections-area {
+    margin-top: 100px;
+}
+
+.items-list {
+    margin: 0px;
+    max-height: 300px;
+    overflow: auto;
+}

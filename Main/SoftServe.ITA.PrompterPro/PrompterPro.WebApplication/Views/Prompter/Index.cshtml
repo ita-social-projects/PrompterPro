@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "../_Layout.cshtml";
+}
+@section Scripts
+{
+	<script src="~/Scripts/min/prompter.min.js"></script>
+}
+<div ng-app="app" ng-controller="prompterController">
+    <div class="container" style="width: 1200px !important">
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-1" style="padding-top: 200px">
+                <img src="~/Content/Trinagles/left-triangle.png"/>
+            </div>
+            <textarea id="area" disabled="disabled" readonly="readonly"
+                      class="col-xs-6 textarea-prompter"
+                      ng-style="{'paddingRight':rightPadding +'%','paddingLeft':leftPadding + '%','font-size':textSize + 'px'}">
+                {{script ? displayText(): ""}}
+            </textarea>
+            <div class="col-xs-1" style="padding-top: 200px">
+                <img src="~/Content/Trinagles/right-triangle.png"/>
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </div>
+</div>

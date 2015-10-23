@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" charset="utf-8" />
+    <title>PromoterPro tests page</title>
+
+    <script src="~/Scripts/jasmine/jasmine.js"></script>
+    <script src="~/Scripts/jasmine/jasmine-html.js"></script>
+    <script src="~/Scripts/jasmine/boot.js"></script>
+    <script src="~/Scripts/blanked/blanket.js"></script>
+    <script src="~/Scripts/blanked/jasmine-2.x-blanket.js"></script>
+
+    @*all dependencies goes here*@
+    <script src="~/Scripts/min/scriptsForTests.js"></script>
+    <script src="~/Scripts/min/additionalFiles.js"></script>
+    <script src="signalr/hubs"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/styles.min.css">
+
+    @*js, that needs to be code covereged*@
+    <script src="~/Scripts/min/appForTests.js" data-cover></script>
+
+    <script src="~/Scripts/min/unitTests.js"></script>
+
+</head>
+<body>
+    <div>
+        <script>
+
+            $(document).ready(function() {
+                window.hubReady = $.connection.hub.start();
+            });
+
+        </script>
+    </div>
+</body>
+</html>

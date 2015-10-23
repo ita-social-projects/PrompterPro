@@ -1,0 +1,53 @@
+﻿.list-group-diagnostics {
+    width: 100%;
+    margin: 0 auto;
+    list-style-type: none;
+}
+.list-group-diagnostics .list-group-heading, .list-group-diagnostics .list-group-item {
+    padding: 0;
+    border: 0;
+    display: flex;
+} 
+
+.list-group-diagnostics .list-group-heading span, .list-group-diagnostics .list-group-item span {
+    display: block;
+    float: left;
+    margin: 0;
+    width: 25%;
+    padding: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #ddd; 
+    font-family: sans-serif;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.list-group-diagnostics .list-group-heading span {
+    color: #fff;
+    background: #337ab7;
+    /*border: 1px solid #ddd;*/
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+.list-group-diagnostics .list-group-item:nth-child(odd) {
+    background: #fff;
+}
+.list-group-diagnostics .list-group-item:nth-child(even) {
+    background: #f2f2f2;
+}
+.list-group-diagnostics .list-group-heading:first-child span:first-child{
+    border-radius: 5px 0 0 0;
+}
+.list-group-diagnostics .list-group-heading:first-child span:last-child{
+    border-radius: 0 5px 0 0;
+}
+
+.list-group-diagnostics .list-group-item:last-child span:first-child{
+    border-radius: 0 0 5px 0;
+}
+.list-group-diagnostics .list-group-item:last-child span:last-child{
+    border-radius: 0 0 0 5px;
+}

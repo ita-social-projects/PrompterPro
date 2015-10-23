@@ -1,0 +1,507 @@
+﻿@using System.Web.Optimization
+
+@{
+    Layout = "../_Layout.cshtml";
+}
+
+<div ng-app="app" ng-controller="scriptController">
+    <div class=" container">
+        <div class="row">
+
+            <!-- loader -->
+            <div class="loader"
+                 ng-show="showLoader" ng-init="showWorkspace=true"></div>
+
+            <!-- connecting loader -->
+            <div ng-show="connecting">
+                <h2 class="text-center">Connecting to prompters...</h2>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active"
+                         role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
+
+            <!-- workspace -->
+            <div ng-show="showWorkspace">
+
+                <!-- modal for new script -->
+                <form class="modal fade"
+                      name="scriptForm"
+                      modal-model="scriptModal"
+                      visible="showScriptModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">New Script</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Name</h4>
+                                <input type="text" required class="form-control" placeholder="Enter Name"
+                                       ng-model="newScriptName" />
+                                <h4>Description</h4>
+                                <input class="form-control"
+                                       ng-model="newScriptDescription" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary"
+                                        ng-click="scriptService.add(scriptForm)"
+                                        ng-disabled="scriptForm.$invalid">
+                                    Save changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- modal for upload -->
+                <form class="modal fade"
+                      name="importForm"
+                      modal-model="importModal"
+                      visible="showImport">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Import Script From PPTX</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <!-- loader -->
+                                <div class="small-loader"
+                                     ng-show="showImportLoader"></div>
+
+                                <div class="input-group"
+                                     ng-show="!showImportLoader">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-primary btn-file">
+                                            Browse&hellip; <input type="file" file-model="scriptFile" accept=".pptx,.txt">
+                                        </span>
+                                    </span>
+                                    <input type="text" class="form-control" readonly value="{{scriptFile.name}}">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary"
+                                        ng-click="scriptService.import()"
+                                        ng-disabled="!scriptFile"
+                                        ng-show="!showImportLoader">
+                                    Import
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="side-bar">
+                    <!-- script list -->
+                    <div class="list-group">
+                        <a class="list-group-item active btn"
+                           ng-click="scriptListClick()">
+                            <span class="badge">{{filteredScripts.length}}</span>
+                            My Scripts
+                        </a>
+                        <div class="list-group-item"
+                             ng-show="showScriptList">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Find"
+                                       ng-model="searchScript.Title">
+                            </div>
+                        </div>
+
+                        <div class="list-group items-list">
+                            <a class="list-group-item"
+                               ng-show="showScriptList"
+                               ng-repeat="script in filteredScripts = (scripts
+                                                                   | scriptFilter
+                                                                   | filter: searchScript
+                                                                   | orderBy: scriptOrder)"
+                               ng-class="scriptClass(script)"
+                               ng-click="scriptService.select(script)">
+                                <span class="btn btn-circle glyphicon glyphicon-trash pull-right"
+                                      ng-click="scriptService.remove(script)"></span>
+                                <h5>{{script.Title}}</h5>
+                                <h6>{{script.Description}}</h6>
+                            </a>
+                        </div>
+
+                        <a class="list-group-item btn"
+                           ng-show="showScriptList"
+                           ng-click="operatorDialog.script()">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Add Script
+                        </a>
+                    </div>
+
+
+                    <!-- prompter list -->
+                    <div class="list-group"
+                         ng-controller="promptersController" ng-init="fetchAllPrompters()">
+                        <a class="list-group-item active btn"
+                           ng-click="prompterListClick()">
+                            <span class="badge">{{filteredPrompters.length}}</span>
+                            Prompters
+                        </a>
+                        <div class="list-group-item"
+                             ng-show="showPrompterList">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                </span>
+                                <input type="search" class="form-control" placeholder="Find"
+                                       ng-model="searchPrompter.Login">
+                            </div>
+                        </div>
+
+                        <div class="list-group items-list">
+                            <a class="list-group-item"
+                               ng-show="showPrompterList"
+                               ng-repeat="prompter in filteredPrompters = (prompters
+                                                                       | filter: searchPrompter
+                                                                       | orderBy: prompterOrder)"
+                               ng-class="prompterClass(prompter)">
+                                <span class="btn btn-circle pull-right"
+                                      ng-show="scriptService.canCheck(prompter)">
+                                    <span class="glyphicon glyphicon-unchecked"
+                                          ng-hide="prompterChecked(prompter)"
+                                          ng-click="scriptService.check(prompter)"></span>
+                                    <span class="glyphicon glyphicon-check"
+                                          ng-show="prompterChecked(prompter)"
+                                          ng-click="scriptService.check(prompter)"></span>
+                                </span>
+                                <h5>{{prompter.Login}}</h5>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- editor area -->
+                <div id="my-script-area" class="script-area">
+
+                    <div id="my-head-bar" class="head-bar">
+                        <div class="row margin-vert">
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-lg"
+                                        ng-click="operatorDialog.import()">
+                                    <span class="glyphicon glyphicon-save-file"></span>
+                                    Import
+                                </button>
+                                <button class="btn btn-default btn-lg"
+                                        ng-click="broadcastOperator.startBroadcast()"
+                                        ng-disabled="!showEditor || !checked.length">
+                                    <span class="glyphicon glyphicon-facetime-video"></span>
+                                    Play
+                                </button>
+                                <button class="btn btn-default btn-lg"
+                                        ng-click="scriptService.saveToTxt()"
+                                        ng-disabled="!showEditor">
+                                    <span class="glyphicon glyphicon-file"></span>
+                                    Export
+                                </button>
+                                <button class="btn btn-default btn-lg"
+                                        ng-disabled="!canSave"
+                                        ng-click="scriptService.save()">
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    Save
+                                </button>
+                                <button class="btn btn-default btn-lg"
+                                        ng-disabled="!showEditor"
+                                        ng-repeat="section in dragSectionTemplate"
+                                        ng-click="addNewSection(selectedScript)"
+                                        dnd-draggable="section"
+                                        dnd-effect-allowed="copy"
+                                        dnd-copied="dragNewSection(section,selectedScript)">
+                                    <span class="glyphicon glyphicon-plus-sign"></span>
+                                    Add section
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row margin-vert">
+                            <input class="form-control title"
+                                   ng-model="selectedScript.Title"
+                                   type="text"
+                                   ng-show="showEditor"
+                                   ng-change="if(selectedScript.EntityState!==4)
+                                   selectedScript.EntityState=16">
+                        </div>
+                    </div>
+
+                    <!--Script sections-->
+                    <div class="sections-area"
+                         ng-show="showEditor">
+                        <div class="scriptDnd">
+                            <ul ng-show="showEditor" dnd-list="selectedScript.Sections"
+                                ng-init="isTextShown=true">
+                                <li ng-repeat="section in selectedScript.Sections"
+                                    dnd-draggable="section"
+                                    dnd-moved="moveSection(section, selectedScript)"
+                                    ng-show="isDeleted(section)">
+                                    <span class="btn glyphicon glyphicon-chevron-down"
+                                          ng-click="isTextShown = !isTextShown"
+                                          ng-show="!isTextShown"
+                                          title="Show text"></span>
+                                    <span class="btn glyphicon glyphicon-chevron-up"
+                                          ng-click="isTextShown = !isTextShown"
+                                          ng-show="isTextShown"
+                                          title="Hide text"></span>
+                                    {{displaySectionIntro(section)}}
+                                    <textarea class="form-control animate-show"
+                                              ng-model="section.Text"
+                                              ng-change="updateSectionState(section, selectedScript)"
+                                              ng-readonly="loadingScripts"
+                                              auto-size
+                                              ng-show="isTextShown"
+                                              set-focus="section.isFocused"></textarea>
+
+                                    <span class="btn btn-circle glyphicon glyphicon-trash pull-right"
+                                          ng-click="deleteSection(section, selectedScript)"
+                                          title="Delete section"></span>
+                                    <hr />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+
+            <div ng-show="showPlayer">
+                <div ng-controller="playerController">
+                <!--Customize Prompter Settings-->
+
+
+                    <script type="text/ng-template" id="customizePrompter.html">
+                                <div class="modal-header label-primary tableHeader-style">
+                                    <h3 class="modal-title">Customize Prompter Settings</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            Check All
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <select class="move-left"
+                                                    ng-model="selectedAllResolution"
+                                                    ng-options="opt as opt.label for opt in options"
+                                                    ng-click="checkAllResolution()"></select>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <input type="checkbox" ng-model="selectedAllX" ng-click="checkAllX()" />
+                                            Mirror X
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <input type="checkbox" ng-model="selectedAllY" ng-click="checkAllY()" />
+                                            Mirror Y
+                                        </div>
+                                    </div>
+                                    <hr />                                    
+                                        <div ng-repeat="item in items">
+                                            <div class="row">
+                                                <div class="col-xs-2">{{ item.Login }}</div>
+                                                <div class="col-xs-2">
+                                                    <select class="move-left"
+                                                            ng-model="item.Resolution"
+                                                            ng-options="opt as opt.label for opt in options"></select>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <input type="checkbox" class="move-left" ng-model="item.IsMirroredX">
+                                                    Mirror X
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <input type="checkbox" class="move-left" ng-model="item.IsMirroredY">
+                                                    Mirror Y
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" ng-click="ok()">OK</button>
+                                </div>
+                            </script>
+
+                        <form class="modal fade"
+                              name="scriptForm"
+                              modal-model="dialoge"
+                              visible="showDialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <p class="modal-title">Text has been modified.Save changes?</p>
+                                    </div>
+                                    <div class="modal-body">
+                                        <button class="btn btn-default" ng-click="dontSaveChanges()">No</button>
+                                        <button class="btn btn-primary" ng-click="saveChanges()">Yes</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="checkbox" />Always save changes
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                <div class="container" style="background-color: black; width: 1120px !important">
+                    <div class="row">
+                        <div class="col-xs-2" style="padding-top: 200px">
+                            <img src="~/Content/Trinagles/left-triangle.png" class="pull-right"/>
+                        </div>
+                        <textarea id="area"
+                                  class="col-xs-8 textarea-style"
+                                  ng-checked="mirrorText(isMirroredX,isMirroredY)"
+                                  ng-keypress="textIsChanged = true"
+                                  ng-style="{'paddingRight':rightPadding + '%','paddingLeft':leftPadding + '%','font-size':textSize + 'px'}"
+                                  ng-mouseover="isNavigateButtonShown = true"
+                                  ng-mouseleave="isNavigateButtonShown = false">
+                                                {{displayText()}}
+                                            </textarea>
+                        <div class="col-xs-2 pull-right" style="padding-top: 200px">
+                            <img src="~/Content/Trinagles/right-triangle.png"/>
+                        </div>
+                    </div>
+                </div>
+
+                        <div class="container" style="width:1120px !important">
+                            <div class="row-fluid"
+                                 ng-init="leftPadding=0,rightPadding=0,textSize=90">
+                                <div class="col-xs-6">
+                                    <input type="range"
+                                           min="0"
+                                           max="25"
+                                           ng-model="leftPadding"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           tooltip="padding:{{leftPadding}}%" />
+                                    {{padLeft(leftPadding)}}
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="range"
+                                           min="0"
+                                           max="25"
+                                           ng-model="rightPadding"
+                                           style="transform: rotate(180deg)"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           tooltip="padding:{{rightPadding}}%"  />
+                                    {{padRight(rightPadding)}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container" style="width: 1120px !important">
+                            <div class="row">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <div class="panel-title">
+                                                Options
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-xs-2 pull-left">
+                                                            <input type="range"
+                                                                   min="70"
+                                                                   max="109"
+                                                                   ng-model="textSize"
+                                                                   data-toggle="tooltip"
+                                                                   data-placement="top"
+                                                                   tooltip="size:{{textSize}}" />
+                                                            {{changeTextSize(textSize)}}
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            <button class="btn btn-default glyphicon glyphicon-play move-left"
+                                                                    ng-click="play()"
+                                                                    ng-disabled="isPlayDisabled"></button>
+
+                                                            <button class="btn btn-default glyphicon glyphicon-pause move-left"
+                                                                    ng-click="pause()"></button>
+
+                                                            <button class="btn btn-default glyphicon glyphicon-stop move-left"
+                                                                    ng-click="stop()"></button>
+
+                                                            <button class="btn btn-default move-left glyphicon glyphicon-backward move-left"
+                                                                    ng-mousedown="handPlayBack()"
+                                                                    ng-mouseup="pause()"
+                                                                    ng-disabled="isHandPlayDisabled"></button>
+
+                                                            <button class="btn btn-default move-left glyphicon glyphicon-forward move-left"
+                                                                    ng-mousedown="handPlay()"
+                                                                    ng-mouseup="pause()"
+                                                                    ng-disabled="isHandPlayDisabled"></button>
+
+                                                            <button class="btn btn-default move-left"
+                                                                    ng-click="speedUp()"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    tooltip="speed={{speed}}">
+                                                                Speed Up
+                                                            </button>
+
+                                                            <button class="btn btn-default move-left"
+                                                                    ng-click="speedDown()"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    tooltip="speed={{speed}}">
+                                                                Speed Down
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-xs-1">
+                                                            <div class="slideTwo" data-toggle="tooltip"
+                                                                 data-placement="top"
+                                                                 tooltip="MirroredX:{{isMirroredX?'On':'Off'}}">
+                                                                <input type="checkbox" 
+                                                                       id="mirrorx" 
+                                                                       name="check" 
+                                                                       ng-model="isMirroredX" />
+                                                                <label for="mirrorx"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-1">
+                                                            <div class="slideTwo" 
+                                                                 data-toggle="tooltip"
+                                                                 data-placement="top"
+                                                                 tooltip="MirroredY:{{isMirroredY?'On':'Off'}}">
+                                                                <input type="checkbox" 
+                                                                       id="mirrory" 
+                                                                       name="check" 
+                                                                       ng-model="isMirroredY" />
+                                                                <label for="mirrory"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-2">
+                                                            <button class="btn btn-default glyphicon glyphicon-off pull-right"
+                                                                    ng-click="closePlayer()" 
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    tooltip="Finish Broadcasting"></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+
+

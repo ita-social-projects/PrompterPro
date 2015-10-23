@@ -1,0 +1,116 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{A9A2DCA0-9895-4A3E-97CD-AD5789C74246}"
+	ProjectSection(SolutionItems) = preProject
+		packages.config = packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.Domain.Services", "PrompterPro.Domain.Services\PrompterPro.Domain.Services.csproj", "{83E2418F-23C6-425B-975E-4C59EDDDF2B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.Validation", "PrompterPro.Validation\PrompterPro.Validation.csproj", "{E46D0B59-D394-4AEA-8B0A-F93EA36F1079}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.Domain.Models", "PrompterPro.Domain.Models\PrompterPro.Domain.Models.csproj", "{6C9ACC7D-9EF5-4FF1-8DB1-711508A32079}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.Domain.Services.UnitTests", "UnitTests\PrompterPro.Domain.Services.UnitTests\PrompterPro.Domain.Services.UnitTests.csproj", "{E8948680-6631-4570-B59B-0C094AEBB70B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.Validation.UnitTests", "UnitTests\PrompterPro.Validation.UnitTests\PrompterPro.Validation.UnitTests.csproj", "{21880CE2-B5C9-44E7-871A-304F20BF9FDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.WebApplication.UnitTests", "UnitTests\PrompterPro.WebApplication.UnitTests\PrompterPro.WebApplication.UnitTests.csproj", "{F06F30D0-9E2D-40C0-B31F-C33087EB284A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.Infrastructure.Data.EF", "PrompterPro.Infrastructure.Data.EF\PrompterPro.Infrastructure.Data.EF.csproj", "{2544ACBE-32E5-452B-9582-42BCE5714B5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.WebApplication", "PrompterPro.WebApplication\PrompterPro.WebApplication.csproj", "{FFD3B15E-AAF7-465B-9154-10251FF45A3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrompterPro.Common", "PrompterPro.Common\PrompterPro.Common.csproj", "{3CE6FDF5-B65A-4ED9-A6E3-A80242DC9F9C}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs12.training.local:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PrompterPro.Domain.Services\\PrompterPro.Domain.Services.csproj
+		SccProjectName1 = PrompterPro.Domain.Services
+		SccLocalPath1 = PrompterPro.Domain.Services
+		SccProjectUniqueName2 = PrompterPro.Validation\\PrompterPro.Validation.csproj
+		SccProjectName2 = PrompterPro.Validation
+		SccLocalPath2 = PrompterPro.Validation
+		SccProjectUniqueName3 = PrompterPro.Domain.Models\\PrompterPro.Domain.Models.csproj
+		SccProjectName3 = PrompterPro.Domain.Models
+		SccLocalPath3 = PrompterPro.Domain.Models
+		SccProjectUniqueName4 = UnitTests\\PrompterPro.Domain.Services.UnitTests\\PrompterPro.Domain.Services.UnitTests.csproj
+		SccProjectTopLevelParentUniqueName4 = SoftServe.ITA.PrompterPro.sln
+		SccProjectName4 = UnitTests/PrompterPro.Domain.Services.UnitTests
+		SccLocalPath4 = UnitTests\\PrompterPro.Domain.Services.UnitTests
+		SccProjectUniqueName5 = UnitTests\\PrompterPro.Validation.UnitTests\\PrompterPro.Validation.UnitTests.csproj
+		SccProjectTopLevelParentUniqueName5 = SoftServe.ITA.PrompterPro.sln
+		SccProjectName5 = UnitTests/PrompterPro.Validation.UnitTests
+		SccLocalPath5 = UnitTests\\PrompterPro.Validation.UnitTests
+		SccProjectUniqueName6 = UnitTests\\PrompterPro.WebApplication.UnitTests\\PrompterPro.WebApplication.UnitTests.csproj
+		SccProjectTopLevelParentUniqueName6 = SoftServe.ITA.PrompterPro.sln
+		SccProjectName6 = UnitTests/PrompterPro.WebApplication.UnitTests
+		SccLocalPath6 = UnitTests\\PrompterPro.WebApplication.UnitTests
+		SccProjectUniqueName7 = PrompterPro.Infrastructure.Data.EF\\PrompterPro.Infrastructure.Data.EF.csproj
+		SccProjectName7 = PrompterPro.Infrastructure.Data.EF
+		SccLocalPath7 = PrompterPro.Infrastructure.Data.EF
+		SccProjectUniqueName8 = PrompterPro.WebApplication\\PrompterPro.WebApplication.csproj
+		SccProjectName8 = PrompterPro.WebApplication
+		SccLocalPath8 = PrompterPro.WebApplication
+		SccProjectUniqueName9 = PrompterPro.Common\\PrompterPro.Common.csproj
+		SccProjectName9 = PrompterPro.Common
+		SccLocalPath9 = PrompterPro.Common
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83E2418F-23C6-425B-975E-4C59EDDDF2B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E2418F-23C6-425B-975E-4C59EDDDF2B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E2418F-23C6-425B-975E-4C59EDDDF2B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E2418F-23C6-425B-975E-4C59EDDDF2B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E46D0B59-D394-4AEA-8B0A-F93EA36F1079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E46D0B59-D394-4AEA-8B0A-F93EA36F1079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E46D0B59-D394-4AEA-8B0A-F93EA36F1079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E46D0B59-D394-4AEA-8B0A-F93EA36F1079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9ACC7D-9EF5-4FF1-8DB1-711508A32079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9ACC7D-9EF5-4FF1-8DB1-711508A32079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9ACC7D-9EF5-4FF1-8DB1-711508A32079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9ACC7D-9EF5-4FF1-8DB1-711508A32079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8948680-6631-4570-B59B-0C094AEBB70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8948680-6631-4570-B59B-0C094AEBB70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8948680-6631-4570-B59B-0C094AEBB70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8948680-6631-4570-B59B-0C094AEBB70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21880CE2-B5C9-44E7-871A-304F20BF9FDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21880CE2-B5C9-44E7-871A-304F20BF9FDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21880CE2-B5C9-44E7-871A-304F20BF9FDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21880CE2-B5C9-44E7-871A-304F20BF9FDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06F30D0-9E2D-40C0-B31F-C33087EB284A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06F30D0-9E2D-40C0-B31F-C33087EB284A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06F30D0-9E2D-40C0-B31F-C33087EB284A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06F30D0-9E2D-40C0-B31F-C33087EB284A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2544ACBE-32E5-452B-9582-42BCE5714B5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2544ACBE-32E5-452B-9582-42BCE5714B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2544ACBE-32E5-452B-9582-42BCE5714B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2544ACBE-32E5-452B-9582-42BCE5714B5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD3B15E-AAF7-465B-9154-10251FF45A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD3B15E-AAF7-465B-9154-10251FF45A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD3B15E-AAF7-465B-9154-10251FF45A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD3B15E-AAF7-465B-9154-10251FF45A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CE6FDF5-B65A-4ED9-A6E3-A80242DC9F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CE6FDF5-B65A-4ED9-A6E3-A80242DC9F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CE6FDF5-B65A-4ED9-A6E3-A80242DC9F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CE6FDF5-B65A-4ED9-A6E3-A80242DC9F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E8948680-6631-4570-B59B-0C094AEBB70B} = {A9A2DCA0-9895-4A3E-97CD-AD5789C74246}
+		{21880CE2-B5C9-44E7-871A-304F20BF9FDD} = {A9A2DCA0-9895-4A3E-97CD-AD5789C74246}
+		{F06F30D0-9E2D-40C0-B31F-C33087EB284A} = {A9A2DCA0-9895-4A3E-97CD-AD5789C74246}
+	EndGlobalSection
+EndGlobal

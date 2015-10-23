@@ -1,0 +1,85 @@
+﻿input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 3.3px 0;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2.4px;
+  cursor: pointer;
+  box-shadow: 0.9px 0.9px 1.7px #002200, 0px 0px 0.9px #003c00;
+  background: rgba(32, 93, 40, 0);
+  border-radius: 1px;
+  border: 1.1px solid rgba(24, 213, 1, 0);
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1.2px 1.2px 0.7px #0049d5, 0px 0px 1.2px #0052ef;
+  border: 3.5px solid #3244ff;
+  height: 9px;
+  width: 9px;
+  border-radius: 40px;
+  background: #1f53f0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -4.4px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: rgba(39, 112, 48, 0);
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 2.4px;
+  cursor: pointer;
+  box-shadow: 0.9px 0.9px 1.7px #002200, 0px 0px 0.9px #003c00;
+  background: rgba(32, 93, 40, 0);
+  border-radius: 1px;
+  border: 1.1px solid rgba(24, 213, 1, 0);
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1.2px 1.2px 0.7px #0049d5, 0px 0px 1.2px #0052ef;
+  border: 3.5px solid #3244ff;
+  height: 9px;
+  width: 9px;
+  border-radius: 40px;
+  background: #1f53f0;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 2.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: rgba(25, 74, 32, 0);
+  border: 1.1px solid rgba(24, 213, 1, 0);
+  border-radius: 2px;
+  box-shadow: 0.9px 0.9px 1.7px #002200, 0px 0px 0.9px #003c00;
+}
+input[type=range]::-ms-fill-upper {
+  background: rgba(32, 93, 40, 0);
+  border: 1.1px solid rgba(24, 213, 1, 0);
+  border-radius: 2px;
+  box-shadow: 0.9px 0.9px 1.7px #002200, 0px 0px 0.9px #003c00;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1.2px 1.2px 0.7px #0049d5, 0px 0px 1.2px #0052ef;
+  border: 3.5px solid #3244ff;
+  height: 9px;
+  width: 9px;
+  border-radius: 40px;
+  background: #1f53f0;
+  cursor: pointer;
+  height: 2.4px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: rgba(32, 93, 40, 0);
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: rgba(39, 112, 48, 0);
+}

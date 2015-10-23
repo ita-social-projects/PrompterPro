@@ -1,0 +1,78 @@
+﻿@using System.Web.Optimization
+@{
+    Layout = "../_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Login Page";
+}
+
+<br /><br />
+<div ng-controller="user-controller">
+    <form novalidate name="loginform" ng-submit="sendLoginToServer()">
+        <div class="form-horizontal col-sm-offset-3" role="form" ng-show="!IsLogedIn">
+
+               
+                    <div class="form-group">
+                        <label class=" col-xs-3 control-label text-right">Login:</label>
+                        <div class="col-xs-4">
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="LoginData.Login"
+                                   placeholder="Enter Login"
+                                   name="cUsername"
+                                   ng-minlength=3
+                                   required autofocus
+                                   ng-class="Submitted?'ng-dirty':''" />
+                        </div>
+                        <span class="field-validation-error"
+                              ng-show="(loginform.cUsername.$dirty || Submitted)
+                               && loginform.cUsername.$error.required">Login required</span>
+                        <span class="field-validation-error"
+                              ng-show="(loginform.cUsername.$dirty || Submitted)
+                               && loginform.cUsername.$error.minlength">Login (min. 3 characters)</span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label text-right">Password:</label>
+                        <div class="col-xs-4">
+                            <input type="password"
+                                   class="form-control"
+                                   ng-model="Pass"
+                                   placeholder="Enter Password"
+                                   name="cPass"
+                                   ng-minlength=3
+                                   required autofocus
+                                   ng-class="Submitted?'ng-dirty':''" />
+                        </div>
+                        <span class="field-validation-error"
+                              ng-show="(loginform.cPass.$dirty
+                               || Submitted)
+                               && loginform.cPass.$error.required">Password required</span>
+                        <span class="field-validation-error"
+                              ng-show="(loginform.cPass.$dirty
+                               || Submitted)
+                               && loginform.cPass.$error.minlength">Password (min. 3 characters)</span>
+                    </div>
+              
+
+
+            <div class="form-group">
+                <div class="col-xs-offset-3 col-xs-3">
+                    <button type="submit"
+                            class=" btn btn-primary">
+                        <span class="glyphicon glyphicon-lock"></span>Login
+                    </button>
+                </div>
+            </div>
+                <div class="form-group ">
+                    <div class="col-xs-offset-3 col-xs-6 field-validation-error text-left">
+                        {{ModelError}}
+                    </div>
+                </div>
+           
+        </div>
+    </form>
+</div>
+
+
